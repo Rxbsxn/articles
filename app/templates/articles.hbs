@@ -1,3 +1,19 @@
+<h1>Last page: {{ model.meta.pagination.last.number }}!</h1>
+
 {{#each model as |article|}}
   <li>{{ article.title }} <blockquote>{{ article.body}}</blockquote></li>
+{{/each}}
+
+{{#each-in model.meta.pagination as |key value|}}
+  {{link-to key "articles" (query-params page=value.number)}}
+{{/each-in}}
+
+<br>
+
+{{#each count as |number|}}
+  {{#if (eq number model.meta.pagination.self.number) }}
+    {{ number }}
+  {{else}}
+    {{link-to number "articles" (query-params page=number)}}
+  {{/if}}
 {{/each}}
